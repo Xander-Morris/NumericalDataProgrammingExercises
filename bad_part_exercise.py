@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib
+matplotlib.use('QtAgg')
 from matplotlib import pyplot as plt
 import io
 
@@ -1440,9 +1442,43 @@ def plot_a_contiguous_portion_of_dataset(feature, label, start, end):
   # Render the scatter plot.
   plt.show()
 
-
 print("Defined the following functions:")
 print("  * plot_the_dataset")
 print("  * plot_a_contiguous_portion_of_dataset")
 
 plot_the_dataset("calories", "test_score", number_of_points_to_plot=50)
+print("Week 0:")
+print(training_df[0:350].describe())
+print("Week 1:")
+print(training_df[350:700].describe())
+print("Week 2:")
+print(training_df[700:1050].describe())
+print("Week 3:")
+print(training_df[1050:1400].describe())
+
+for i in range(0,7):
+  start = i * 50
+  end = start + 49
+  print("\nDay %d" % i)
+  plot_a_contiguous_portion_of_dataset("calories", "test_score", start, end)
+
+running_total_of_thursday_calories = 0
+running_total_of_non_thursday_calories = 0
+count = 0
+
+for week in range(0,4):
+  for day in range(0,7):
+    for subject in range(0, 50):
+      position = (week * 350) + (day * 50) + subject
+
+      if (day == 4):  # Thursday
+        running_total_of_thursday_calories += training_df['calories'][position]
+      else:  # Any day except Thursday
+        count += 1
+        running_total_of_non_thursday_calories += training_df['calories'][position]
+
+mean_of_thursday_calories = running_total_of_thursday_calories / 200
+mean_of_non_thursday_calories = running_total_of_non_thursday_calories / 1200
+
+print("The mean of Thursday calories is %.0f" % (mean_of_thursday_calories))
+print("The mean of calories on days other than Thursday is %.0f" % (mean_of_non_thursday_calories))
