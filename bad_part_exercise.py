@@ -1408,3 +1408,41 @@ dataset = '''calories,test_score
 training_df = pd.read_csv(io.StringIO(dataset), on_bad_lines='warn')
 print(training_df.describe())
 
+#@title Define the plotting functions { display-mode: "form" }
+
+# The following code defines the plotting functions that can be used to
+# visualize the data.
+
+def plot_the_dataset(feature, label, number_of_points_to_plot):
+  """Plot N random points of the dataset."""
+
+  # Label the axes.
+  plt.xlabel(feature)
+  plt.ylabel(label)
+
+  # Create a scatter plot from n random points of the dataset.
+  random_examples = training_df.sample(n=number_of_points_to_plot)
+  plt.scatter(random_examples[feature], random_examples[label])
+
+  # Render the scatter plot.
+  plt.show()
+
+def plot_a_contiguous_portion_of_dataset(feature, label, start, end):
+  """Plot the data points from start to end."""
+
+  # Label the axes.
+  plt.xlabel(feature + "Day")
+  plt.ylabel(label)
+
+  # Create a scatter plot.
+  plt.scatter(training_df[feature][start:end], training_df[label][start:end])
+
+  # Render the scatter plot.
+  plt.show()
+
+
+print("Defined the following functions:")
+print("  * plot_the_dataset")
+print("  * plot_a_contiguous_portion_of_dataset")
+
+plot_the_dataset("calories", "test_score", number_of_points_to_plot=50)
