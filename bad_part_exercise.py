@@ -1477,8 +1477,10 @@ for week in range(0,4):
         count += 1
         running_total_of_non_thursday_calories += training_df['calories'][position]
 
-mean_of_thursday_calories = running_total_of_thursday_calories / 200
-mean_of_non_thursday_calories = running_total_of_non_thursday_calories / 1200
+divisor = 200
+mean_of_thursday_calories = running_total_of_thursday_calories / divisor
+# divisor * 6 because we are accounting for ALL 6 other days that are NOT Thursday 
+mean_of_non_thursday_calories = running_total_of_non_thursday_calories / (divisor * 6)
 
 print("The mean of Thursday calories is %.0f" % (mean_of_thursday_calories))
 print("The mean of calories on days other than Thursday is %.0f" % (mean_of_non_thursday_calories))
